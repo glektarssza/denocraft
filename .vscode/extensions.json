@@ -3,6 +3,7 @@
         "github.remotehub",
         "github.vscode-pull-request-github",
         "github.vscode-github-actions",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "denoland.vscode-deno"
     ]
 }
