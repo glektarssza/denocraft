@@ -42,3 +42,7 @@ tags
 
 # Environment #
 .envrc
+
+# Artifacts #
+## Deno ##
+dist/
