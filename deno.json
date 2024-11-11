@@ -77,7 +77,6 @@
                 "no-async-promise-executor",
                 "no-await-in-loop",
                 "no-await-in-sync-fn",
-                "no-boolean-literal-for-arguments",
                 "no-case-declarations",
                 "no-class-assign",
                 "no-compare-neg-zero",
