@@ -43,6 +43,9 @@ tags
 # Environment #
 .envrc
 
+# Packages #
+node_modules/
+
 # Artifacts #
 ## Deno ##
 dist/
