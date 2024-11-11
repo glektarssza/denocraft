@@ -30,6 +30,8 @@
         "include": [
             "./bench/*.ts",
             "./bench/**/*.ts",
+            "./scripts/*.ts",
+            "./scripts/**/*.ts",
             "./src/*.ts",
             "./src/**/*.ts",
             "./tests/*.ts",
@@ -46,6 +48,8 @@
         "include": [
             "./bench/*.ts",
             "./bench/**/*.ts",
+            "./scripts/*.ts",
+            "./scripts/**/*.ts",
             "./src/*.ts",
             "./src/**/*.ts",
             "./tests/*.ts",
