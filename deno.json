@@ -152,7 +152,9 @@
     },
     "lock": true,
     "nodeModulesDir": "auto",
-    "tasks": {},
+    "tasks": {
+        "dev": "deno run ./src/dev.ts"
+    },
     "test": {
         "include": [
             "./tests/*.spec.ts",
