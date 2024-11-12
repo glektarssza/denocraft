@@ -30,6 +30,8 @@
         "include": [
             "./bench/*.ts",
             "./bench/**/*.ts",
+            "./scripts/*.ts",
+            "./scripts/**/*.ts",
             "./src/*.ts",
             "./src/**/*.ts",
             "./tests/*.ts",
@@ -46,6 +48,8 @@
         "include": [
             "./bench/*.ts",
             "./bench/**/*.ts",
+            "./scripts/*.ts",
+            "./scripts/**/*.ts",
             "./src/*.ts",
             "./src/**/*.ts",
             "./tests/*.ts",
@@ -73,7 +77,6 @@
                 "no-async-promise-executor",
                 "no-await-in-loop",
                 "no-await-in-sync-fn",
-                "no-boolean-literal-for-arguments",
                 "no-case-declarations",
                 "no-class-assign",
                 "no-compare-neg-zero",
@@ -149,7 +152,9 @@
     },
     "lock": true,
     "nodeModulesDir": "auto",
-    "tasks": {},
+    "tasks": {
+        "dev": "deno run ./src/dev.ts"
+    },
     "test": {
         "include": [
             "./tests/*.spec.ts",
