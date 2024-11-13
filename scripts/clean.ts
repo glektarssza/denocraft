@@ -10,12 +10,12 @@ import yargs from 'npm:yargs';
 
 //-- Project Code
 import {
-    setVerbose,
-    writeError,
-    writeInfo,
-    writeVerbose,
-    writeWarning,
-} from './logging.ts';
+    logError,
+    logInfo,
+    logVerbose,
+    logWarning,
+    setOutputVerboseLogs,
+} from './lib/logging.ts';
 
 /**
  * The argument parser.
@@ -64,9 +64,9 @@ const parser = yargs(Deno.args)
 
 await parser.parseAsync()
     .then(async (args): Promise<void> => {
-        setVerbose(args.verbose);
-        writeInfo('Cleaning project...');
-        writeVerbose(`Target(s): ${args.target}`);
+        setOutputVerboseLogs(args.verbose);
+        logInfo('Cleaning project...');
+        logVerbose(`Target(s): ${args.target}`);
         const ps = args.target.map(async (target: string): Promise<void> => {
             try {
                 await Deno.remove(
@@ -77,17 +77,17 @@ await parser.parseAsync()
                 );
             } catch (ex) {
                 if (ex instanceof Deno.errors.NotFound) {
-                    writeWarning(
+                    logWarning(
                         `Target ${target} not found - has it been built?`,
                     );
                     return;
                 }
-                writeError(`Failed to clean target ${target}`);
+                logError(`Failed to clean target ${target}`);
                 throw ex;
             }
         });
         await Promise.all(ps);
-        writeInfo('Project cleaned.');
+        logInfo('Project cleaned.');
         console.log(chalk.greenBright('Success!'));
     })
     .catch((err: Error): void => {
