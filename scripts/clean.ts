@@ -66,8 +66,9 @@ await parser.parseAsync()
     .then(async (args): Promise<void> => {
         setOutputVerboseLogs(args.verbose);
         logInfo('Cleaning project...');
-        logVerbose(`Target(s): ${args.target}`);
+        logVerbose(`Selected target(s): ${args.target}`);
         const ps = args.target.map(async (target: string): Promise<void> => {
+            logVerbose(`Cleaning target ${target}...`);
             try {
                 await Deno.remove(
                     path.join(import.meta.dirname!, '../dist', target),
@@ -85,9 +86,10 @@ await parser.parseAsync()
                 logError(`Failed to clean target ${target}`);
                 throw ex;
             }
+            logVerbose(`Cleaned target ${target}`);
         });
         await Promise.all(ps);
-        logInfo('Project cleaned.');
+        logInfo('Project cleaned');
         console.log(chalk.greenBright('Success!'));
     })
     .catch((err: Error): void => {
