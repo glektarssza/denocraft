@@ -30,17 +30,20 @@ on:
       artifact-id:
         description: |
           The ID of the artifact produced by the build.
-        value: ''
+        value: ${{ jobs.build.outputs.artifact-id }}
       artifact-name:
         description: |
           The name of the artifact produced by the build.
-        value: ''
+        value: ${{ jobs.build.outputs.artifact-name }}
 jobs:
   build:
     name: Build
     runs-on: ${{ startsWith(github.event.inputs.build-os, 'linux') && 'ubuntu' || github.event.inputs.build-os }}-latest
     permissions:
       contents: read
+    outputs:
+      artifact-id: ${{ steps.upload-artifacts.outputs.artifact-id }}
+      artifact-name: ${{ github.event.inputs.build-type }}-${{ github.event.inputs.build-os }}
     steps:
       - id: checkout-repository
         name: Checkout repository
