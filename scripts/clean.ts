@@ -9,13 +9,7 @@ import chalk from 'npm:chalk';
 import yargs from 'npm:yargs';
 
 //-- Project Code
-import {
-    logError,
-    logInfo,
-    logVerbose,
-    logWarning,
-    setOutputVerboseLogs,
-} from './lib/logging.ts';
+import { logging } from './lib/mod.ts';
 
 /**
  * The argument parser.
@@ -64,11 +58,11 @@ const parser = yargs(Deno.args)
 
 await parser.parseAsync()
     .then(async (args): Promise<void> => {
-        setOutputVerboseLogs(args.verbose);
-        logInfo('Cleaning project...');
-        logVerbose(`Selected target(s): ${args.target}`);
+        logging.setOutputVerboseLogs(args.verbose);
+        logging.logInfo('Cleaning project...');
+        logging.logVerbose(`Selected target(s): ${args.target}`);
         const ps = args.target.map(async (target: string): Promise<void> => {
-            logVerbose(`Cleaning target ${target}...`);
+            logging.logVerbose(`Cleaning target ${target}...`);
             try {
                 await Deno.remove(
                     path.join(import.meta.dirname!, '../dist', target),
@@ -78,21 +72,27 @@ await parser.parseAsync()
                 );
             } catch (ex) {
                 if (ex instanceof Deno.errors.NotFound) {
-                    logWarning(
+                    logging.logWarning(
                         `Target ${target} not found - has it been built?`,
                     );
                     return;
                 }
-                logError(`Failed to clean target ${target}`);
+                logging.logError(`Failed to clean target ${target}`);
                 throw ex;
             }
-            logVerbose(`Cleaned target ${target}`);
+            logging.logVerbose(`Cleaned target ${target}`);
         });
         await Promise.all(ps);
-        logInfo('Project cleaned');
-        console.log(chalk.greenBright('Success!'));
+        logging.logInfo('Project cleaned');
+        logging.getOutputFunction(logging.LoggingLevel.Info)(
+            chalk.greenBright('Success!'),
+        );
     })
     .catch((err: Error): void => {
-        console.error(chalk.redBright('Fatal error!'));
-        console.error(chalk.redBright(err));
+        logging.getOutputFunction(logging.LoggingLevel.Error)(
+            chalk.redBright('Fatal error!'),
+        );
+        logging.getOutputFunction(logging.LoggingLevel.Error)(
+            chalk.redBright(err),
+        );
     });
