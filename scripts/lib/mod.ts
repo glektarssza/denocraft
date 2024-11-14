@@ -5,3 +5,4 @@
  */
 
 export * as logging from './logging.ts';
+export * as buildTarget from './buildTarget.ts';

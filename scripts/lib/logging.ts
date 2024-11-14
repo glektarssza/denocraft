@@ -4,6 +4,9 @@
  * @module
  */
 
+//-- NPM
+import chalk from 'npm:chalk';
+
 /**
  * An enumeration of available logging levels.
  */
@@ -52,6 +55,31 @@ const loggingFunctions: Record<LoggingLevel, LoggingFunction> = {
     info: console.info,
     verbose: console.log,
     debug: console.debug,
+};
+
+/**
+ * A function which can color messages to be logged.
+ *
+ * @param message The message to be colored.
+ * @param data Any additional data to be colored with the message.
+ *
+ * @returns The colored message.
+ */
+// deno-lint-ignore no-explicit-any
+export type LoggingColorFunction = (message: string, ...data: any[]) => string;
+
+/**
+ * The functions being used to color messages.
+ */
+const loggingColorFunctions: Record<
+    LoggingLevel,
+    LoggingColorFunction
+> = {
+    error: chalk.redBright,
+    warning: chalk.yellowBright,
+    info: chalk.cyanBright,
+    verbose: chalk.magentaBright,
+    debug: chalk.blueBright,
 };
 
 /**
@@ -149,6 +177,70 @@ export function resetAllOutputFunctions(): void {
 }
 
 /**
+ * Get the function to use for coloring a giving logging level.
+ *
+ * @param level The logging level to get the color function for.
+ *
+ * @returns The function to use as the color function.
+ */
+export function getOutputColorFunction(
+    level: LoggingLevel,
+): LoggingColorFunction {
+    return loggingColorFunctions[level];
+}
+
+/**
+ * Set the function to use for coloring a giving logging level.
+ *
+ * @param level The logging level to set the color function for.
+ * @param func The function to set as the color function.
+ */
+export function setOutputColorFunction(
+    level: LoggingLevel,
+    func: LoggingColorFunction,
+): void {
+    loggingColorFunctions[level] = func;
+}
+
+/**
+ * Reset the function to use for coloring a giving logging level.
+ *
+ * @param level The logging level to reset the color function for.
+ */
+export function resetOutputColorFunction(
+    level: LoggingLevel,
+): void {
+    switch (level) {
+        case LoggingLevel.Error:
+            setOutputColorFunction(level, chalk.redBright);
+            break;
+        case LoggingLevel.Warning:
+            setOutputColorFunction(level, chalk.yellowBright);
+            break;
+        case LoggingLevel.Info:
+            setOutputColorFunction(level, chalk.blueBright);
+            break;
+        case LoggingLevel.Verbose:
+            setOutputColorFunction(level, chalk.magentaBright);
+            break;
+        case LoggingLevel.Debug:
+            setOutputColorFunction(level, chalk.blueBright);
+            break;
+    }
+}
+
+/**
+ * Reset all the functions to use for coloring logging messages.
+ */
+export function resetAllOutputColorFunctions(): void {
+    resetOutputColorFunction(LoggingLevel.Error);
+    resetOutputColorFunction(LoggingLevel.Warning);
+    resetOutputColorFunction(LoggingLevel.Info);
+    resetOutputColorFunction(LoggingLevel.Verbose);
+    resetOutputColorFunction(LoggingLevel.Debug);
+}
+
+/**
  * Log a message to the console.
  *
  * @param level The logging level to output at.
@@ -162,7 +254,13 @@ export function log(
     if (level === LoggingLevel.Verbose && !getOutputVerboseLogs()) {
         return;
     }
-    getOutputFunction(level)(message, ...data);
+    getOutputFunction(level)(
+        getOutputColorFunction(level)(
+            `[${level.toUpperCase()}]`,
+            message,
+            ...data,
+        ),
+    );
 }
 
 /**

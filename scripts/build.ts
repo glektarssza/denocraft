@@ -1,3 +1,6 @@
+//-- jsr.io
+import * as path from 'jsr:@std/path';
+
 //-- npm.com
 import chalk from 'npm:chalk';
 // @deno-types='npm:@types/yargs'
@@ -49,43 +52,44 @@ const parser = yargs(Deno.args)
 await parser.parseAsync()
     .then(async (args): Promise<void> => {
         logging.setOutputVerboseLogs(args.verbose);
-        logging.logInfo('Cleaning project...');
+        logging.logInfo('Building project...');
         logging.logVerbose(`Selected target(s): ${args.target}`);
         const ps = args.target.map(async (target: string): Promise<void> => {
             if (!buildTarget.isValidBuildTarget(target)) {
                 throw new Error(`Invalid target: ${target}`);
             }
-            logging.logVerbose(`Cleaning target ${target}...`);
-            try {
-                await Deno.remove(
-                    buildTarget.getOutputPath(target),
-                    {
-                        recursive: true,
-                    },
+            logging.logVerbose(`Building target ${target}...`);
+            const mainModule = buildTarget.getMainModulePath(
+                buildTarget.getBuildType(target),
+            );
+            const outputDir = buildTarget.getOutputPath(target);
+            const outputPath = path.join(outputDir, 'denocraft');
+            const cmd = new Deno.Command('deno', {
+                args: [
+                    'compile',
+                    '--output',
+                    outputPath,
+                    '--target',
+                    buildTarget.mapToDenoTarget(target),
+                    '--allow-ffi',
+                    '--allow-read',
+                    '--unstable-webgpu',
+                    mainModule,
+                ],
+            });
+            const status = await cmd.output();
+            if (!status.success) {
+                throw new Error(
+                    `Failed to build target ${target} (exit code: ${status.code})`,
                 );
-            } catch (ex) {
-                if (ex instanceof Deno.errors.NotFound) {
-                    logging.logWarning(
-                        `Target ${target} not found - has it been built?`,
-                    );
-                    return;
-                }
-                logging.logError(`Failed to clean target ${target}`);
-                throw ex;
             }
-            logging.logVerbose(`Cleaned target ${target}`);
+            logging.logVerbose(`Built target ${target}`);
         });
         await Promise.all(ps);
-        logging.logInfo('Project cleaned');
-        logging.getOutputFunction(logging.LoggingLevel.Info)(
-            chalk.greenBright('Success!'),
-        );
+        logging.logInfo('Project built');
+        console.log(chalk.greenBright('Success!'));
     })
     .catch((err: Error): void => {
-        logging.getOutputFunction(logging.LoggingLevel.Error)(
-            chalk.redBright('Fatal error!'),
-        );
-        logging.getOutputFunction(logging.LoggingLevel.Error)(
-            chalk.redBright(err),
-        );
+        console.error(chalk.redBright('Fatal error!'));
+        console.error(chalk.redBright(err));
     });
