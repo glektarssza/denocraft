@@ -13,14 +13,14 @@ import { buildTarget, logging } from './lib/mod.ts';
  * The argument parser.
  */
 const parser = yargs(Deno.args)
-    .scriptName('clean')
-    .usage('$0 - Clean the project')
+    .scriptName('build')
+    .usage('$0 - Build the project')
     .epilog("Copyright (c) 2024 G'lek Tarssza, all rights reserved.")
     .help('help', 'Display help information and then exit.', true)
     .alias('help', 'h')
     .version('version', 'Display version information and then exit.', '0.0.0')
     .alias('version', 'v')
-    .env('DENOCRAFT_CLEAN')
+    .env('DENOCRAFT_BUILD')
     .strict()
     .strictCommands(true)
     .strictOptions(true)
@@ -39,13 +39,13 @@ const parser = yargs(Deno.args)
     .option('target', {
         type: 'array',
         string: true,
-        description: 'The target to clean.',
+        description: 'The target(s) to build.',
         demandOption: true,
         nargs: 1,
         requiresArg: true,
         global: true,
         default: buildTarget.getDefaultBuildTargets(),
-        group: 'Target',
+        group: 'Targeting',
     });
 
 // deno-lint-ignore no-top-level-await

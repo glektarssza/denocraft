@@ -36,13 +36,13 @@ const parser = yargs(Deno.args)
     .option('target', {
         type: 'array',
         string: true,
-        description: 'The target to clean.',
+        description: 'The target(s) to clean.',
         demandOption: true,
         nargs: 1,
         requiresArg: true,
         global: true,
         default: buildTarget.getDefaultBuildTargets(),
-        group: 'Target',
+        group: 'Targeting',
     });
 
 // deno-lint-ignore no-top-level-await
