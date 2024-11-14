@@ -1,0 +1,38 @@
+name: Push
+on:
+  push:
+jobs:
+  lint:
+    name: Lint
+    permissions:
+      contents: read
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+    uses: ./.github/workflows/lint.yaml
+  test:
+    name: Test
+    permissions:
+      contents: read
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+    uses: ./.github/workflows/test.yaml
+  build:
+    name: Build
+    permissions:
+      contents: read
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      fail-fast: true
+      matrix:
+        build-os:
+          - linux
+          - windows
+          - macos
+        build-type:
+          - development
+          - release
+    uses: ./.github/workflows/build.yaml
+    with:
+      build-os: ${{ matrix.build-os }}
+      build-type: ${{ matrix.build-type }}
