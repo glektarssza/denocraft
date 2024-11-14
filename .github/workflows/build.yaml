@@ -56,7 +56,7 @@ jobs:
       - id: build
         name: Build
         run: |
-          deno task build:${{ github.event.inputs.build-type }}
+          deno task build:${{ inputs.build-type }}
       - id: upload-artifacts
         name: Upload artifacts
         uses: actions/upload-artifact@v4
