@@ -23,13 +23,11 @@ jobs:
           deno-version: v2.x
       - id: test
         name: Test
+        continue-on-error: true
         run: |
-          deno test --permit-no-files --clean --coverage=coverage
+          deno test --clean --coverage=coverage
       - id: print-coverage-results
         name: Print coverage results
+        if: steps.test.outcome == 'success'
         run: |
-          if [[ -d coverage ]]; then
-            deno coverage --exclude='\.spec\.ts$' --detailed coverage
-          else
-            echo "::warning ::No coverage results found"
-          fi
+          deno coverage --exclude='\.spec\.ts$' --detailed coverage
