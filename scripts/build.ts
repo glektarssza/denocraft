@@ -53,8 +53,25 @@ await parser.parseAsync()
     .then(async (args): Promise<void> => {
         logging.setOutputVerboseLogs(args.verbose);
         logging.logInfo('Building project...');
+        if (args.target.includes('all')) {
+            args.target = buildTarget.getAllBuildTargets();
+        }
         logging.logVerbose(`Selected target(s): ${args.target}`);
         const ps = args.target.map(async (target: string): Promise<void> => {
+            if (!buildTarget.isValidBuildTargetOrSpecialBuildTarget(target)) {
+                throw new Error(`Invalid target: ${target}`);
+            }
+            if (target === 'current') {
+                target = buildTarget.getBuildTargetFromCurrent();
+            } else if (target === 'dev' || target === 'development') {
+                target = buildTarget.getBuildTargetFromCurrent(
+                    buildTarget.BuildType.Development,
+                );
+            } else if (target === 'release') {
+                target = buildTarget.getBuildTargetFromCurrent(
+                    buildTarget.BuildType.Release,
+                );
+            }
             if (!buildTarget.isValidBuildTarget(target)) {
                 throw new Error(`Invalid target: ${target}`);
             }

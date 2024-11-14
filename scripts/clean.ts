@@ -50,6 +50,9 @@ await parser.parseAsync()
     .then(async (args): Promise<void> => {
         logging.setOutputVerboseLogs(args.verbose);
         logging.logInfo('Cleaning project...');
+        if (args.target.includes('all')) {
+            args.target = buildTarget.getAllBuildTargets();
+        }
         logging.logVerbose(`Selected target(s): ${args.target}`);
         const ps = args.target.map(async (target: string): Promise<void> => {
             if (!buildTarget.isValidBuildTarget(target)) {
