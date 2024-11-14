@@ -1,0 +1,27 @@
+name: Lint
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
+        description: |
+          The token to use for making authenticated GitHub API requests.
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+      - id: setup-deno
+        name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - id: lint
+        name: Lint
+        run: |
+          deno lint

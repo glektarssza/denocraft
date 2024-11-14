@@ -1,0 +1,65 @@
+name: Build
+on:
+  workflow_call:
+    inputs:
+      build-os:
+        type: string
+        required: true
+        description: |
+          The operating system to build for.
+
+          Valid values are:
+           - linux
+           - windows
+           - macos
+      build-type:
+        type: string
+        required: true
+        description: |
+          The type of build to perform.
+
+          Valid values are:
+           - development
+           - release
+    secrets:
+      github-token:
+        required: true
+        description: |
+          The token to use for making authenticated GitHub API requests.
+    outputs:
+      artifact-id:
+        description: |
+          The ID of the artifact produced by the build.
+        value: ${{ jobs.build.outputs.artifact-id }}
+      artifact-name:
+        description: |
+          The name of the artifact produced by the build.
+        value: ${{ jobs.build.outputs.artifact-name }}
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ startsWith(inputs.build-os, 'linux') && 'ubuntu' || inputs.build-os }}-latest
+    permissions:
+      contents: read
+    outputs:
+      artifact-id: ${{ steps.upload-artifacts.outputs.artifact-id }}
+      artifact-name: ${{ inputs.build-type }}-${{ inputs.build-os }}
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+      - id: setup-deno
+        name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - id: build
+        name: Build
+        run: |
+          deno task build:${{ inputs.build-type }}
+      - id: upload-artifacts
+        name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.build-type }}-${{ inputs.build-os }}
+          path: dist/${{ inputs.build-os }}/${{ inputs.build-type }}/${{ (runner.arch == 'X64' && 'x64') || (runner.arch == 'ARM64' && 'aarch64') || (runner.arch == 'ARM' && 'aarch32') || (runner.arch == 'X86' && 'x86') || '' }}
