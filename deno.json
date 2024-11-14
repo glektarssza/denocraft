@@ -155,6 +155,7 @@
     "tasks": {
         "build": "deno run -A ./scripts/build.ts --target current",
         "build:dev": "deno run -A ./scripts/build.ts --target dev",
+        "build:development": "deno run -A ./scripts/build.ts --target development",
         "build:release": "deno run -A ./scripts/build.ts --target release",
         "build:all": "deno run -A ./scripts/build.ts --target all",
         "build:windows": "deno run -A ./scripts/build.ts --target release-win-x64 --target dev-win-x64",
