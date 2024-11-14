@@ -38,12 +38,12 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ${{ startsWith(github.event.inputs.build-os, 'linux') && 'ubuntu' || github.event.inputs.build-os }}-latest
+    runs-on: ${{ startsWith(inputs.build-os, 'linux') && 'ubuntu' || inputs.build-os }}-latest
     permissions:
       contents: read
     outputs:
       artifact-id: ${{ steps.upload-artifacts.outputs.artifact-id }}
-      artifact-name: ${{ github.event.inputs.build-type }}-${{ github.event.inputs.build-os }}
+      artifact-name: ${{ inputs.build-type }}-${{ inputs.build-os }}
     steps:
       - id: checkout-repository
         name: Checkout repository
@@ -61,5 +61,5 @@ jobs:
         name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.build-type }}-${{ github.event.inputs.build-os }}
-          path: dist/${{ github.event.inputs.build-os }}/${{ github.event.inputs.build-type }}/${{ (runner.arch == 'X64' && 'x64') || (runner.arch == 'ARM64' && 'aarch64') || (runner.arch == 'ARM' && 'aarch32') || (runner.arch == 'X86' && 'x86') || '' }}
+          name: ${{ inputs.build-type }}-${{ inputs.build-os }}
+          path: dist/${{ inputs.build-os }}/${{ inputs.build-type }}/${{ (runner.arch == 'X64' && 'x64') || (runner.arch == 'ARM64' && 'aarch64') || (runner.arch == 'ARM' && 'aarch32') || (runner.arch == 'X86' && 'x86') || '' }}
