@@ -152,7 +152,26 @@
     },
     "lock": true,
     "nodeModulesDir": "auto",
-    "tasks": {},
+    "tasks": {
+        "build": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts",
+        "build:dev": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --dev",
+        "build:windows": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os windows",
+        "build:linux": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os linux",
+        "build:macos": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os macos",
+        "build:dev:windows": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os windows --dev",
+        "build:dev:linux": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os linux --dev",
+        "build:dev:macos": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os macos --dev",
+        "build:windows:x64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os windows --cpu x64",
+        "build:linux:x64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os linux --cpu x64",
+        "build:linux:aarch64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os linux --cpu aarch64",
+        "build:macos:x64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os macos --cpu x64",
+        "build:macos:aarch64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os macos --cpu aarch64",
+        "build:dev:windows:x64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os windows --cpu x64 --dev",
+        "build:dev:linux:x64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os linux --cpu x64 --dev",
+        "build:dev:linux:aarch64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os linux --cpu aarch64 --dev",
+        "build:dev:macos:x64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os macos --cpu x64 --dev",
+        "build:dev:macos:aarch64": "deno run --allow-env --allow-read --allow-write --allow-run ./scripts/build.ts --os macos --cpu aarch64 --dev"
+    },
     "test": {
         "include": [
             "./tests/*.spec.ts",
