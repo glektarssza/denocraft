@@ -81,6 +81,7 @@ try {
 
     if (args.help) {
         console.log('Usage: build [options]');
+        console.log('Build the project.');
         console.log();
         console.log('== General ==');
         console.log();
