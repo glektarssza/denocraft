@@ -168,9 +168,15 @@ try {
     logging.logVerbose('Building project...');
 
     const sig = new AbortController();
-    Deno.addSignalListener('SIGTERM', (): void => {
-        sig.abort();
-    });
+    if (Deno.build.os === 'windows') {
+        Deno.addSignalListener('SIGBREAK', (): void => {
+            sig.abort();
+        });
+    } else {
+        Deno.addSignalListener('SIGTERM', (): void => {
+            sig.abort();
+        });
+    }
     Deno.addSignalListener('SIGINT', (): void => {
         sig.abort();
     });
