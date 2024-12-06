@@ -153,8 +153,10 @@
     "lock": true,
     "nodeModulesDir": "auto",
     "tasks": {
-        "build": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts",
-        "build:dev": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts --dev",
+        "build": "deno task build:release",
+        "build:dev": "deno task build:development",
+        "build:release": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts",
+        "build:development": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts --dev",
         "build:windows": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts --os windows",
         "build:linux": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts --os linux",
         "build:macos": "deno run --allow-env --allow-sys --allow-read --allow-write --allow-run ./scripts/build.ts --os macos",
