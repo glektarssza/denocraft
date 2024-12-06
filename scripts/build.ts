@@ -1,112 +1,208 @@
-//-- jsr.io
+// deno-lint-ignore-file no-non-null-assertion
+/**
+ * A script which provides a way to build the project.
+ *
+ * @module
+ */
+
+//-- JSR
+import { parseArgs } from 'jsr:@std/cli';
 import * as path from 'jsr:@std/path';
 
-//-- npm.com
+//-- NPM
 import chalk from 'npm:chalk';
-// @deno-types='npm:@types/yargs'
-import yargs from 'npm:yargs';
 
 //-- Project Code
-import { buildTarget, logging } from './lib/mod.ts';
+import { logging, targets } from './lib/mod.ts';
 
 /**
- * The argument parser.
+ * Log a fatal error and then exit.
+ *
+ * @param err - The fatal error that occurred.
  */
-const parser = yargs(Deno.args)
-    .scriptName('build')
-    .usage('$0 - Build the project')
-    .epilog("Copyright (c) 2024 G'lek Tarssza, all rights reserved.")
-    .help('help', 'Display help information and then exit.', true)
-    .alias('help', 'h')
-    .version('version', 'Display version information and then exit.', '0.0.0')
-    .alias('version', 'v')
-    .env('DENOCRAFT_BUILD')
-    .strict()
-    .strictCommands(true)
-    .strictOptions(true)
-    .fail(false)
-    .completion(
-        'completion',
-        'Generate a completion script for the shell.',
-    )
-    .option('verbose', {
-        type: 'boolean',
-        description: 'Whether to enable verbose logging.',
-        global: true,
-        default: false,
-        group: 'Logging',
-    })
-    .option('target', {
-        type: 'array',
-        string: true,
-        description: 'The target(s) to build.',
-        demandOption: true,
-        nargs: 1,
-        requiresArg: true,
-        global: true,
-        default: buildTarget.getDefaultBuildTargets(),
-        group: 'Targeting',
+function fatalError(err?: Error): never {
+    console.error(chalk.redBright('Fatal error!'));
+    if (err !== undefined) {
+        console.error(err);
+    }
+    Deno.exit(1);
+}
+
+try {
+    /**
+     * The current operating system.
+     */
+    const currentOS = targets.getCurrentOperatingSystem();
+
+    /**
+     * The name of the current operating system.
+     */
+    const currentOSName = targets.OperatingSystem[currentOS].toLowerCase();
+
+    /**
+     * The current CPU architecture.
+     */
+    const currentCPU = targets.getCurrentCPUArchitecture();
+
+    /**
+     * The name of the current CPU architecture.
+     */
+    const currentCPUName = targets.CPUArchitecture[currentCPU].toLowerCase();
+
+    /**
+     * The default path to store build outputs in.
+     */
+    const defaultOutput = path.relative(
+        Deno.cwd(),
+        path.resolve(
+            import.meta.dirname!,
+            `../dist/${currentOSName}/${currentCPUName}`,
+        ),
+    );
+
+    /**
+     * The parsed command-line arguments.
+     */
+    const args = parseArgs(Deno.args, {
+        boolean: ['verbose', 'version', 'help', 'dev'],
+        string: ['target', 'os', 'cpu', 'output'],
+        alias: {
+            help: ['h'],
+            verbose: ['v'],
+            output: ['o'],
+        },
+        default: {
+            os: currentOSName,
+            cpu: currentCPUName,
+            output: defaultOutput,
+        },
     });
 
-// deno-lint-ignore no-top-level-await
-await parser.parseAsync()
-    .then(async (args): Promise<void> => {
-        logging.setOutputVerboseLogs(args.verbose);
-        logging.logInfo('Building project...');
-        if (args.target.includes('all')) {
-            args.target = buildTarget.getAllBuildTargets();
-        }
-        logging.logVerbose(`Selected target(s): ${args.target}`);
-        const ps = args.target.map(async (target: string): Promise<void> => {
-            if (!buildTarget.isValidBuildTargetOrSpecialBuildTarget(target)) {
-                throw new Error(`Invalid target: ${target}`);
-            }
-            if (target === 'current') {
-                target = buildTarget.getBuildTargetFromCurrent();
-            } else if (target === 'dev' || target === 'development') {
-                target = buildTarget.getBuildTargetFromCurrent(
-                    buildTarget.BuildType.Development,
-                );
-            } else if (target === 'release') {
-                target = buildTarget.getBuildTargetFromCurrent(
-                    buildTarget.BuildType.Release,
-                );
-            }
-            if (!buildTarget.isValidBuildTarget(target)) {
-                throw new Error(`Invalid target: ${target}`);
-            }
-            logging.logVerbose(`Building target ${target}...`);
-            const mainModule = buildTarget.getMainModulePath(
-                buildTarget.getBuildType(target),
+    logging.setVerboseLoggingEnabled(args.verbose);
+
+    if (args.help) {
+        console.log('Usage: build [options]');
+        console.log('Build the project.');
+        console.log();
+        console.log('== General ==');
+        console.log();
+        console.log('  --help, -h\t\tDisplay the help information and exit.');
+        console.log('  --version\t\tDisplay the version information and exit.');
+        console.log();
+        console.log('== Output ==');
+        console.log();
+        console.log(
+            `  --output, -o\t\t\tThe destination to store the resulting build in.\t\t[default: ${defaultOutput}]`,
+        );
+        console.log();
+        console.log('== Targeting ==');
+        console.log();
+        console.log(
+            `  --os\t\t\tThe operating system to target.\t\t\t\t\t[default: ${currentOSName}]`,
+        );
+        console.log(
+            `  --cpu\t\t\tThe CPU architecture to target.\t\t\t\t\t[default: ${currentCPUName}]`,
+        );
+        console.log(
+            '  --target\t\tThe platform to target. Overrides the `--os` and `--cpu` flags.',
+        );
+        console.log();
+        console.log('== Logging ==');
+        console.log();
+        console.log('  --verbose, -v\t\tEnable verbose logging.');
+        console.log();
+        console.log("Copyright (c) 2024 G'lek Tarssza, all rights reserved.");
+        Deno.exit(0);
+    }
+
+    if (args.version) {
+        console.log('v0.0.1');
+        Deno.exit(0);
+    }
+
+    const target: targets.BuildTarget = {
+        os: currentOS,
+        cpu: currentCPU,
+    };
+    if (args.target !== undefined) {
+        const [rawOS, rawCPU] = args.target.split('-');
+        if (!rawOS) {
+            throw new Error(
+                `Invalid target argument "${args.target}" (operating system not specified)`,
             );
-            const outputDir = buildTarget.getOutputPath(target);
-            const outputPath = path.join(outputDir, 'denocraft');
-            const cmd = new Deno.Command('deno', {
-                args: [
-                    'compile',
-                    '--output',
-                    outputPath,
-                    '--target',
-                    buildTarget.mapToDenoTarget(target),
-                    '--allow-ffi',
-                    '--allow-read',
-                    '--unstable-webgpu',
-                    mainModule,
-                ],
-            });
-            const status = await cmd.output();
-            if (!status.success) {
-                throw new Error(
-                    `Failed to build target ${target} (exit code: ${status.code})`,
-                );
-            }
-            logging.logVerbose(`Built target ${target}`);
+        }
+        if (!rawCPU) {
+            throw new Error(
+                `Invalid target argument "${args.target}" (CPU architecture not specified)`,
+            );
+        }
+        target.os = targets.parseOperatingSystem(rawOS);
+        target.cpu = targets.parseCPUArchitecture(rawCPU);
+    } else {
+        target.os = targets.parseOperatingSystem(args.os);
+        target.cpu = targets.parseCPUArchitecture(args.cpu);
+    }
+
+    logging.logInfo(
+        `Starting build for "${
+            targets.OperatingSystem[target.os].toLowerCase()
+        }-${targets.CPUArchitecture[target.cpu].toLowerCase()}"`,
+    );
+
+    const denoTarget = targets.mapBuildTargetToDenoTarget(target);
+
+    logging.logVerbose(`Using Deno target "${denoTarget}"`);
+
+    const input = path.resolve(
+        import.meta.dirname!,
+        args.dev ? '../src/dev.ts' : '../src/main.ts',
+    );
+    const output = path.resolve(
+        Deno.cwd(),
+        args.output,
+    );
+
+    logging.logVerbose('Ensuring output directory exists...');
+    Deno.mkdirSync(output, { recursive: true });
+
+    logging.logVerbose('Building project...');
+
+    const sig = new AbortController();
+    if (Deno.build.os === 'windows') {
+        Deno.addSignalListener('SIGBREAK', (): void => {
+            sig.abort();
         });
-        await Promise.all(ps);
-        logging.logInfo('Project built');
-        console.log(chalk.greenBright('Success!'));
-    })
-    .catch((err: Error): void => {
-        console.error(chalk.redBright('Fatal error!'));
-        console.error(chalk.redBright(err));
+    } else {
+        Deno.addSignalListener('SIGTERM', (): void => {
+            sig.abort();
+        });
+    }
+    Deno.addSignalListener('SIGINT', (): void => {
+        sig.abort();
     });
+
+    const proc = new Deno.Command(Deno.execPath(), {
+        args: [
+            'compile',
+            '--output',
+            `${output}/denocraft${args.dev ? '-dev' : ''}`,
+            '--target',
+            denoTarget,
+            input,
+        ],
+        signal: sig.signal,
+    });
+    const childProc = proc.spawn();
+    childProc.ref();
+    childProc.status.then(({ success, code }): void => {
+        logging.logVerbose('Built project');
+        if (!success) {
+            fatalError(new Error(`Deno exited with status code "${code}"`));
+        }
+        console.log(chalk.greenBright('Success!'));
+    }).catch((err): void => {
+        fatalError(err instanceof Error ? err : undefined);
+    });
+} catch (err) {
+    fatalError(err instanceof Error ? err : undefined);
+}

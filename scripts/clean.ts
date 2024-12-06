@@ -1,94 +1,178 @@
-//-- npm.com
+// deno-lint-ignore-file no-non-null-assertion
+/**
+ * A script which provides a way to clean the project.
+ *
+ * @module
+ */
+
+//-- JSR
+import { parseArgs } from 'jsr:@std/cli';
+import * as path from 'jsr:@std/path';
+
+//-- NPM
 import chalk from 'npm:chalk';
-// @deno-types='npm:@types/yargs'
-import yargs from 'npm:yargs';
 
 //-- Project Code
-import { buildTarget, logging } from './lib/mod.ts';
+import { logging, targets } from './lib/mod.ts';
 
 /**
- * The argument parser.
+ * Log a fatal error and then exit.
+ *
+ * @param err - The fatal error that occurred.
  */
-const parser = yargs(Deno.args)
-    .scriptName('clean')
-    .usage('$0 - Clean the project')
-    .epilog("Copyright (c) 2024 G'lek Tarssza, all rights reserved.")
-    .help('help', 'Display help information and then exit.', true)
-    .alias('help', 'h')
-    .version('version', 'Display version information and then exit.', '0.0.0')
-    .alias('version', 'v')
-    .env('DENOCRAFT_CLEAN')
-    .strict()
-    .strictCommands(true)
-    .strictOptions(true)
-    .fail(false)
-    .completion(
-        'completion',
-        'Generate a completion script for the shell.',
-    )
-    .option('verbose', {
-        type: 'boolean',
-        description: 'Whether to enable verbose logging.',
-        global: true,
-        default: false,
-        group: 'Logging',
-    })
-    .option('target', {
-        type: 'array',
-        string: true,
-        description: 'The target(s) to clean.',
-        demandOption: true,
-        nargs: 1,
-        requiresArg: true,
-        global: true,
-        default: buildTarget.getDefaultBuildTargets(),
-        group: 'Targeting',
+function fatalError(err?: Error): never {
+    console.error(chalk.redBright('Fatal error!'));
+    if (err !== undefined) {
+        console.error(err);
+    }
+    Deno.exit(1);
+}
+
+try {
+    /**
+     * The current operating system.
+     */
+    const currentOS = targets.getCurrentOperatingSystem();
+
+    /**
+     * The name of the current operating system.
+     */
+    const currentOSName = targets.OperatingSystem[currentOS].toLowerCase();
+
+    /**
+     * The current CPU architecture.
+     */
+    const currentCPU = targets.getCurrentCPUArchitecture();
+
+    /**
+     * The name of the current CPU architecture.
+     */
+    const currentCPUName = targets.CPUArchitecture[currentCPU].toLowerCase();
+
+    /**
+     * The parsed command-line arguments.
+     */
+    const args = parseArgs(Deno.args, {
+        boolean: ['verbose', 'version', 'help', 'dev', 'all'],
+        string: ['target', 'os', 'cpu'],
+        alias: {
+            help: ['h'],
+            verbose: ['v'],
+        },
+        default: {
+            os: currentOSName,
+            cpu: currentCPUName,
+        },
     });
 
-// deno-lint-ignore no-top-level-await
-await parser.parseAsync()
-    .then(async (args): Promise<void> => {
-        logging.setOutputVerboseLogs(args.verbose);
-        logging.logInfo('Cleaning project...');
-        if (args.target.includes('all')) {
-            args.target = buildTarget.getAllBuildTargets();
+    logging.setVerboseLoggingEnabled(args.verbose);
+
+    if (args.help) {
+        console.log('Usage: clean [options]');
+        console.log('Clean the project.');
+        console.log();
+        console.log('== General ==');
+        console.log();
+        console.log('  --help, -h\t\tDisplay the help information and exit.');
+        console.log('  --version\t\tDisplay the version information and exit.');
+        console.log();
+        console.log('== Targeting ==');
+        console.log();
+        console.log(
+            `  --os\t\t\tThe operating system to target.\t\t\t\t\t[default: ${currentOSName}]`,
+        );
+        console.log(
+            `  --cpu\t\t\tThe CPU architecture to target.\t\t\t\t\t[default: ${currentCPUName}]`,
+        );
+        console.log(
+            '  --target\t\tThe platform to target. Overrides the `--os` and `--cpu` flags.',
+        );
+        console.log(
+            '  --all\t\t\tTarget all platforms. Overrides the `--os`, `--cpu`, and `--target` flags.',
+        );
+        console.log();
+        console.log('== Logging ==');
+        console.log();
+        console.log('  --verbose, -v\t\tEnable verbose logging.');
+        console.log();
+        console.log("Copyright (c) 2024 G'lek Tarssza, all rights reserved.");
+        Deno.exit(0);
+    }
+
+    if (args.version) {
+        console.log('v0.0.1');
+        Deno.exit(0);
+    }
+
+    const target: targets.BuildTarget = {
+        os: currentOS,
+        cpu: currentCPU,
+    };
+    if (args.target !== undefined) {
+        const [rawOS, rawCPU] = args.target.split('-');
+        if (!rawOS) {
+            throw new Error(
+                `Invalid target argument "${args.target}" (operating system not specified)`,
+            );
         }
-        logging.logVerbose(`Selected target(s): ${args.target}`);
-        const ps = args.target.map(async (target: string): Promise<void> => {
-            if (!buildTarget.isValidBuildTarget(target)) {
-                throw new Error(`Invalid target: ${target}`);
-            }
-            logging.logVerbose(`Cleaning target ${target}...`);
-            try {
-                await Deno.remove(
-                    buildTarget.getOutputPath(target),
-                    {
-                        recursive: true,
-                    },
-                );
-            } catch (ex) {
-                if (ex instanceof Deno.errors.NotFound) {
-                    logging.logWarning(
-                        `Target ${target} not found - has it been built?`,
-                    );
-                    return;
-                }
-                logging.logError(`Failed to clean target ${target}`);
-                throw ex;
-            }
-            logging.logVerbose(`Cleaned target ${target}`);
-        });
-        await Promise.all(ps);
-        logging.logInfo('Project cleaned');
-        logging.getOutputFunction(logging.LoggingLevel.Info)(
-            chalk.greenBright('Success!'),
+        if (!rawCPU) {
+            throw new Error(
+                `Invalid target argument "${args.target}" (CPU architecture not specified)`,
+            );
+        }
+        target.os = targets.parseOperatingSystem(rawOS);
+        target.cpu = targets.parseCPUArchitecture(rawCPU);
+    } else {
+        target.os = targets.parseOperatingSystem(args.os);
+        target.cpu = targets.parseCPUArchitecture(args.cpu);
+    }
+
+    if (args.all) {
+        logging.logInfo(
+            `Starting clean for all projects`,
         );
-    })
-    .catch((err: Error): void => {
-        logging.getOutputFunction(logging.LoggingLevel.Error)(
-            chalk.redBright('Fatal error!'),
+    } else {
+        logging.logInfo(
+            `Starting clean for "${
+                targets.OperatingSystem[target.os].toLowerCase()
+            }-${targets.CPUArchitecture[target.cpu].toLowerCase()}"`,
         );
-        logging.getOutputFunction(logging.LoggingLevel.Error)(
-            chalk.redBright(err),
+    }
+
+    let output: string;
+    if (args.all) {
+        output = path.relative(
+            Deno.cwd(),
+            path.resolve(
+                import.meta.dirname!,
+                `../dist`,
+            ),
         );
-    });
+    } else {
+        output = path.relative(
+            Deno.cwd(),
+            path.resolve(
+                import.meta.dirname!,
+                `../dist/${currentOSName}/${currentCPUName}`,
+            ),
+        );
+    }
+
+    if (args.dev) {
+        output = path.resolve(
+            output,
+            'denocraft-dev',
+        );
+    }
+
+    logging.logVerbose('Cleaning project(s)...');
+    try {
+        Deno.removeSync(output, { recursive: true });
+    } catch (err) {
+        logging.logWarning(`Could not clean project`);
+        logging.logVerbose(err);
+    }
+    logging.logVerbose('Cleaned project(s)');
+} catch (err) {
+    fatalError(err instanceof Error ? err : undefined);
+}
