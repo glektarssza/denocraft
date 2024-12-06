@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-non-null-assertion
 /**
  * A script which provides a way to clean the project.
  *
