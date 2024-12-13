@@ -26,3 +26,7 @@ repos:
         args: [--fix=crlf]
         types: [batch]
       - id: trailing-whitespace
+  - repo: https://github.com/glektarssza/pre-commit-hooks.git
+    rev: v0.0.1
+    hooks:
+     - id: deno-lint
