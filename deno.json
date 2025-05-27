@@ -4,7 +4,6 @@
         "include": ["tests/**/*.bench.ts", "tests/*.bench.ts"]
     },
     "compilerOptions": {
-        "allowJs": false,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "checkJs": false,
