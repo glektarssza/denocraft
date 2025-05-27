@@ -1,0 +1,46 @@
+{
+    "$schema": "https://github.com/denoland/deno/raw/refs/heads/main/cli/schemas/config-file.v1.json",
+    "bench": {
+        "include": ["tests/**/*.bench.ts", "tests/*.bench.ts"]
+    },
+    "compilerOptions": {
+        "allowJs": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "checkJs": false,
+        "erasableSyntaxOnly": true,
+        "exactOptionalPropertyTypes": true,
+        "isolatedDeclarations": true,
+        "noErrorTruncation": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "types": [],
+        "useUnknownInCatchVariables": true
+    },
+    "fmt": {
+        "include": ["**/*.ts", "*.ts"]
+    },
+    "lint": {
+        "include": ["**/*.ts", "*.ts"]
+    },
+    "lock": true,
+    "tasks": {},
+    "test": {
+        "include": ["tests/**/*.spec.ts", "tests/*.spec.ts"]
+    },
+    "unstable": [],
+    "vendor": true
+}
