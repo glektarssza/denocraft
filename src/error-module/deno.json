@@ -1,0 +1,57 @@
+{
+    "$schema": "https://github.com/denoland/deno/raw/refs/heads/main/cli/schemas/config-file.v1.json",
+    "name": "@denocraft/error-module",
+    "version": "0.1.0",
+    "exports": {
+        ".": "./src/mod.ts"
+    },
+    "imports": {
+        "@src": "./src/mod.ts",
+        "@src/*": "./src/*"
+    },
+    "bench": {
+        "include": ["tests/**/*.bench.ts", "tests/*.bench.ts"]
+    },
+    "compilerOptions": {
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "checkJs": false,
+        "erasableSyntaxOnly": true,
+        "exactOptionalPropertyTypes": true,
+        "noErrorTruncation": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "types": [],
+        "useUnknownInCatchVariables": true
+    },
+    "fmt": {
+        "include": ["**/*.ts", "*.ts"]
+    },
+    "lint": {
+        "include": ["**/*.ts", "*.ts"]
+    },
+
+    "tasks": {
+        "test": {
+            "description": "Run the project unit tests.",
+            "command": "mocha ./tests/**/*.spec.ts"
+        }
+    },
+    "test": {
+        "include": ["tests/**/*.spec.ts", "tests/*.spec.ts"]
+    },
+    "unstable": []
+}
