@@ -1,11 +1,11 @@
-# Denocraft #
+# Denocraft - FFI Module #
 
-A simple Minecraft clone built using Deno.
+A Foreign Function Interface module.
 
 <!-- omit in toc -->
 ## Table of Contents ##
 
-* [Denocraft](#denocraft)
+* [Denocraft - FFI Module](#denocraft---ffi-module)
     * [License](#license)
 
 ## License ##
