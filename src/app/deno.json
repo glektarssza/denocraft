@@ -43,8 +43,12 @@
     "lint": {
         "include": ["**/*.ts", "*.ts"]
     },
-
-    "tasks": {},
+    "tasks": {
+        "test": {
+            "description": "Run the project unit tests.",
+            "command": "mocha ./tests/**/*.spec.ts"
+        }
+    },
     "test": {
         "include": ["tests/**/*.spec.ts", "tests/*.spec.ts"]
     },

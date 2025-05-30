@@ -2,11 +2,16 @@
   "version": "5",
   "specifiers": {
     "npm:@faker-js/faker@*": "9.8.0",
+    "npm:@faker-js/faker@^9.8.0": "9.8.0",
     "npm:@types/chai@*": "5.2.2",
+    "npm:@types/chai@^5.2.2": "5.2.2",
     "npm:@types/mocha@*": "10.0.10",
+    "npm:@types/mocha@^10.0.10": "10.0.10",
     "npm:chai@*": "5.2.0",
+    "npm:chai@^5.2.0": "5.2.0",
     "npm:mocha@*": "11.5.0",
-    "npm:mocha@11.5.0": "11.5.0"
+    "npm:mocha@11.5.0": "11.5.0",
+    "npm:mocha@^11.5.0": "11.5.0"
   },
   "npm": {
     "@faker-js/faker@9.8.0": {
@@ -446,5 +451,14 @@
     "yocto-queue@0.1.0": {
       "integrity": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
     }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:@faker-js/faker@^9.8.0",
+      "npm:@types/chai@^5.2.2",
+      "npm:@types/mocha@^10.0.10",
+      "npm:chai@^5.2.0",
+      "npm:mocha@^11.5.0"
+    ]
   }
 }

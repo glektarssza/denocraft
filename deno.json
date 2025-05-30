@@ -1,8 +1,15 @@
 {
     "$schema": "https://github.com/denoland/deno/raw/refs/heads/main/cli/schemas/config-file.v1.json",
     "workspace": {
-        "members": ["./src/error-module/"]
+        "members": ["./src/app/", "./src/error-module/", "./src/ffi-module/"]
     },
     "lock": true,
-    "vendor": true
+    "vendor": true,
+    "imports": {
+        "@faker-js/faker": "npm:@faker-js/faker@^9.8.0",
+        "@types/chai": "npm:@types/chai@^5.2.2",
+        "@types/mocha": "npm:@types/mocha@^10.0.10",
+        "chai": "npm:chai@^5.2.0",
+        "mocha": "npm:mocha@^11.5.0"
+    }
 }

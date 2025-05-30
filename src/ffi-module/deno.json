@@ -1,6 +1,6 @@
 {
     "$schema": "https://github.com/denoland/deno/raw/refs/heads/main/cli/schemas/config-file.v1.json",
-    "name": "@denocraft/error-module",
+    "name": "@denocraft/ffi-module",
     "version": "0.1.0",
     "exports": {
         ".": "./src/mod.ts"
