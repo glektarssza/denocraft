@@ -1,11 +1,11 @@
-# Denocraft #
+# Denocraft - Error Module #
 
-A simple Minecraft clone built using Deno.
+A module providing some general error types.
 
 <!-- omit in toc -->
 ## Table of Contents ##
 
-* [Denocraft](#denocraft)
+* [Denocraft - Error Module](#denocraft---error-module)
     * [License](#license)
 
 ## License ##
