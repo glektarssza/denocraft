@@ -15,7 +15,7 @@
     "compilerOptions": {
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
-        "checkJs": false,
+        "checkJs": true,
         "erasableSyntaxOnly": true,
         "exactOptionalPropertyTypes": true,
         "noErrorTruncation": true,
@@ -46,7 +46,27 @@
     "tasks": {
         "test": {
             "description": "Run the project unit tests.",
-            "command": "mocha ./tests/**/*.spec.ts"
+            "command": "mocha"
+        },
+        "test:watch": {
+            "description": "Run the project unit tests and watch for changes.",
+            "command": "mocha --watch"
+        },
+        "ci": {
+            "description": "Run the project unit tests in CI mode.",
+            "command": "mocha --exit"
+        },
+        "ci:watch": {
+            "description": "Run the project unit in CI mode and watch for changes.",
+            "command": "mocha --watch --exit"
+        },
+        "coverage": {
+            "description": "Run the project unit tests with coverage enabled.",
+            "command": "nyc mocha"
+        },
+        "coverage:watch": {
+            "description": "Run the project unit tests with coverage enabled.",
+            "command": "nyc mocha --watch"
         }
     },
     "test": {

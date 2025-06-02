@@ -7,9 +7,14 @@
     "vendor": true,
     "imports": {
         "@faker-js/faker": "npm:@faker-js/faker@^9.8.0",
+        "@istanbuljs/nyc-config-typescript": "npm:@istanbuljs/nyc-config-typescript@^1.0.2",
         "@types/chai": "npm:@types/chai@^5.2.2",
         "@types/mocha": "npm:@types/mocha@^10.0.10",
+        "@types/node": "npm:@types/node@^22.15.29",
         "chai": "npm:chai@^5.2.0",
-        "mocha": "npm:mocha@^11.5.0"
+        "chalk": "npm:chalk@^5.4.1",
+        "mocha": "npm:mocha@^11.5.0",
+        "nyc": "npm:nyc@^17.1.0",
+        "source-map-support": "npm:source-map-support@^0.5.21"
     }
 }
