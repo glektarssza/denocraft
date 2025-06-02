@@ -45,3 +45,6 @@ node_modules/
 # Caches #
 ## ESLint ##
 .eslintcache
+
+## Istanbul ##
+.nyc_output/
