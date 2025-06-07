@@ -4,6 +4,7 @@
         "github.vscode-pull-request-github",
         "github.vscode-github-actions",
         "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
         "denoland.vscode-deno"
     ]
 }
