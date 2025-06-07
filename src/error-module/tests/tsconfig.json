@@ -1,0 +1,12 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "types": [],
+        "paths": {
+            "@src": ["../src/mod.ts"],
+            "@src/*": ["../src/*"]
+        }
+    },
+    "exclude": []
+}

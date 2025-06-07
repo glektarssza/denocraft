@@ -26,5 +26,6 @@ repos:
     rev: v0.7.0
     hooks:
       - id: deno-lint
+        entry: deno task --recursive lint
       - id: deno-test
         entry: deno task --recursive test

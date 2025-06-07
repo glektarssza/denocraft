@@ -27,6 +27,7 @@ export class BaseError extends Error {
     public constructor(message?: string, options?: ErrorOptions) {
         super(message, options);
         if (this.constructor.name) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             this.name = this.constructor.name;
         } else {
             this.name = 'BaseError';

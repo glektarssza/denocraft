@@ -1,6 +1,5 @@
 //-- NPM
-// @ts-types="npm:@types/chai"
-import {expect} from 'npm:chai';
+import {expect} from 'chai';
 
 //-- Project Code
 import * as m from '@src';

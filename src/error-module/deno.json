@@ -7,7 +7,8 @@
     },
     "imports": {
         "@src": "./src/mod.ts",
-        "@src/*": "./src/*"
+        "@src/*": "./src/*",
+        "@types/mocha": "npm:@types/mocha@^10.0.10/index.d.ts"
     },
     "bench": {
         "include": ["tests/**/*.bench.ts", "tests/*.bench.ts"]
@@ -44,6 +45,10 @@
         "include": ["**/*.ts", "*.ts"]
     },
     "tasks": {
+        "lint": {
+            "description": "Run ESLint against the project.",
+            "command": "eslint ./src/ ./tests/"
+        },
         "test": {
             "description": "Run the project unit tests.",
             "command": "mocha ./tests/**/*.spec.ts"

@@ -6,10 +6,19 @@
     "lock": true,
     "vendor": true,
     "imports": {
+        "@eslint/js": "npm:@eslint/js@^9.28.0",
         "@faker-js/faker": "npm:@faker-js/faker@^9.8.0",
         "@types/chai": "npm:@types/chai@^5.2.2",
+        "@types/deno": "npm:@types/deno@^2.3.0",
         "@types/mocha": "npm:@types/mocha@^10.0.10",
+        "@types/node": "npm:@types/node@^22.15.30",
         "chai": "npm:chai@^5.2.0",
-        "mocha": "npm:mocha@^11.5.0"
+        "eslint": "npm:eslint@^9.28.0",
+        "eslint-config-prettier": "npm:eslint-config-prettier@^10.1.5",
+        "eslint-plugin-tsdoc": "npm:eslint-plugin-tsdoc@^0.4.0",
+        "globals": "npm:globals@^16.2.0",
+        "mocha": "npm:mocha@^11.5.0",
+        "prettier": "npm:prettier@^3.5.3",
+        "typescript-eslint": "npm:typescript-eslint@^8.33.1"
     }
 }

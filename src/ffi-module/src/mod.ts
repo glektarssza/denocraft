@@ -6,5 +6,6 @@ export function getNativePrefix(): string {
         case 'linux':
             return 'lib';
         default:
+            throw new Error(`Unsupported OS "${Deno.build.os}"`);
     }
 }

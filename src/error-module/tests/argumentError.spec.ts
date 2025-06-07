@@ -1,12 +1,9 @@
 //-- NPM Packages
-// @ts-types='npm:@types/chai'
-import {expect} from 'npm:chai';
-import {base, en, en_CA, en_US, Faker} from 'npm:@faker-js/faker';
-// @ts-types='npm:@types/mocha'
-import {describe, it} from 'npm:mocha';
+import {expect} from 'chai';
+import {base, en, en_CA, en_US, Faker} from '@faker-js/faker';
 
 //-- Project Code
-import {ArgumentError} from '@denocraft/error-module';
+import {ArgumentError} from '@src';
 
 const faker = new Faker({
     locale: [en_CA, en_US, en, base]
