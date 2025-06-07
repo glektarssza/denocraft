@@ -1,0 +1,8 @@
+{
+    "extends": "./deno.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "types": ["deno"]
+    },
+    "exclude": ["node_modules"]
+}

@@ -6,6 +6,7 @@
     "npm:@faker-js/faker@^9.8.0": "9.8.0",
     "npm:@types/chai@*": "5.2.2",
     "npm:@types/chai@^5.2.2": "5.2.2",
+    "npm:@types/deno@^2.3.0": "2.3.0",
     "npm:@types/mocha@*": "10.0.10",
     "npm:@types/mocha@^10.0.10": "10.0.10",
     "npm:@types/node@^22.15.30": "22.15.30",
@@ -15,6 +16,7 @@
     "npm:eslint-plugin-tsdoc@0.4": "0.4.0",
     "npm:eslint@9.28.0": "9.28.0",
     "npm:eslint@^9.28.0": "9.28.0",
+    "npm:globals@^16.2.0": "16.2.0",
     "npm:mocha@*": "11.5.0",
     "npm:mocha@11.5.0": "11.5.0",
     "npm:mocha@^11.5.0": "11.5.0",
@@ -55,7 +57,7 @@
         "ajv@6.12.6",
         "debug",
         "espree",
-        "globals",
+        "globals@14.0.0",
         "ignore@5.3.2",
         "import-fresh",
         "js-yaml",
@@ -149,6 +151,9 @@
     },
     "@types/deep-eql@4.0.2": {
       "integrity": "sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw=="
+    },
+    "@types/deno@2.3.0": {
+      "integrity": "sha512-/4SyefQpKjwNKGkq9qG3Ln7MazfbWKvydyVFBnXzP5OQA4u1paoFtaOe1iHKycIWHHkhYag0lPxyheThV1ijzw=="
     },
     "@types/estree@1.0.7": {
       "integrity": "sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ=="
@@ -623,6 +628,9 @@
     "globals@14.0.0": {
       "integrity": "sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ=="
     },
+    "globals@16.2.0": {
+      "integrity": "sha512-O+7l9tPdHCU320IigZZPj5zmRCFG9xHmx9cU8FqU2Rp+JN714seHV+2S9+JslCpY4gJwU2vOGox0wzgae/MCEg=="
+    },
     "graphemer@1.4.0": {
       "integrity": "sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag=="
     },
@@ -1091,15 +1099,34 @@
       "npm:@eslint/js@^9.28.0",
       "npm:@faker-js/faker@^9.8.0",
       "npm:@types/chai@^5.2.2",
+      "npm:@types/deno@^2.3.0",
       "npm:@types/mocha@^10.0.10",
       "npm:@types/node@^22.15.30",
       "npm:chai@^5.2.0",
       "npm:eslint-config-prettier@^10.1.5",
       "npm:eslint-plugin-tsdoc@0.4",
       "npm:eslint@^9.28.0",
+      "npm:globals@^16.2.0",
       "npm:mocha@^11.5.0",
       "npm:prettier@^3.5.3",
       "npm:typescript-eslint@^8.33.1"
-    ]
+    ],
+    "members": {
+      "src/app": {
+        "dependencies": [
+          "npm:@types/mocha@^10.0.10"
+        ]
+      },
+      "src/error-module": {
+        "dependencies": [
+          "npm:@types/mocha@^10.0.10"
+        ]
+      },
+      "src/ffi-module": {
+        "dependencies": [
+          "npm:@types/mocha@^10.0.10"
+        ]
+      }
+    }
   }
 }

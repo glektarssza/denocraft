@@ -37,6 +37,7 @@ export class ArgumentError extends BaseError {
         if (this.hasCustomMessage) {
             extraStuff.push(` (argument name: ${this.argumentName})`);
         }
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         return `${super.toString()}${extraStuff.join('')}`;
     }
 }

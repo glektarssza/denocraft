@@ -4,7 +4,9 @@ import {ArgumentError} from './argumentError.ts';
  * An error type indicating an argument was invalid because it was outside the
  * allowed range.
  */
-export class ArgumentRangeError<T> extends ArgumentError {
+export class ArgumentRangeError<
+    T extends {toString(): string}
+> extends ArgumentError {
     public readonly minimumValue: T;
 
     public readonly maximumValue: T;
@@ -28,7 +30,7 @@ export class ArgumentRangeError<T> extends ArgumentError {
         super(
             argumentName,
             message ??
-                `Invalid argument "${argumentName}" (outside the allowed range of "${minimumValue}" to "${maximumValue}")`,
+                `Invalid argument "${argumentName}" (outside the allowed range of "${minimumValue.toString()}" to "${maximumValue.toString()}")`,
             options
         );
         this.minimumValue = minimumValue;
@@ -43,8 +45,12 @@ export class ArgumentRangeError<T> extends ArgumentError {
     public override toString(): string {
         const extraStuff: string[] = [];
         if (this.hasCustomMessage) {
-            extraStuff.push(` (maximum value: ${this.maximumValue})`);
-            extraStuff.push(` (minimum value: ${this.minimumValue})`);
+            extraStuff.push(
+                ` (maximum value: ${this.maximumValue.toString()})`
+            );
+            extraStuff.push(
+                ` (minimum value: ${this.minimumValue.toString()})`
+            );
         }
         return `${super.toString()}${extraStuff.join('')}`;
     }
