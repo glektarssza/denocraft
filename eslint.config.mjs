@@ -1,8 +1,6 @@
-// @ts-check
-
 //-- NPM Packages
-import globals from 'globals';
 import eslint from '@eslint/js';
+import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 
