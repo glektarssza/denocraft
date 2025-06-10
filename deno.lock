@@ -1117,12 +1117,12 @@
           "npm:@types/mocha@^10.0.10"
         ]
       },
-      "src/error-module": {
+      "src/liberrors": {
         "dependencies": [
           "npm:@types/mocha@^10.0.10"
         ]
       },
-      "src/ffi-module": {
+      "src/libffi": {
         "dependencies": [
           "npm:@types/mocha@^10.0.10"
         ]
