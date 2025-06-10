@@ -3,7 +3,7 @@ import {BaseError} from './baseError.ts';
 /**
  * An error type indicating an argument was invalid.
  */
-export class ArgumentError extends BaseError {
+export class ArgumentInvalidError extends BaseError {
     /**
      * The name of the argument that was invalid.
      */

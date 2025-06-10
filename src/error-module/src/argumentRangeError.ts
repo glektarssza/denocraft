@@ -1,4 +1,4 @@
-import {ArgumentError} from './argumentError.ts';
+import {ArgumentInvalidError} from './argumentInvalidError.ts';
 
 /**
  * An error type indicating an argument was invalid because it was outside the
@@ -6,7 +6,7 @@ import {ArgumentError} from './argumentError.ts';
  */
 export class ArgumentRangeError<
     T extends {toString(): string}
-> extends ArgumentError {
+> extends ArgumentInvalidError {
     public readonly minimumValue: T;
 
     public readonly maximumValue: T;

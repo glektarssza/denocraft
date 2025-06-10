@@ -1,10 +1,10 @@
-import {ArgumentError} from './argumentError.ts';
+import {ArgumentInvalidError} from './argumentInvalidError.ts';
 
 /**
  * An error type indicating an argument was invalid because it was `null` or
  * `undefined`.
  */
-export class ArgumentNullOrUndefinedError extends ArgumentError {
+export class ArgumentNullOrUndefinedError extends ArgumentInvalidError {
     /**
      * Create a new instance.
      *
