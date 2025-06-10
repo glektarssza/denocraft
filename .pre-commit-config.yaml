@@ -27,5 +27,7 @@ repos:
     hooks:
       - id: deno-lint
         entry: deno task --recursive lint
+        pass_filenames: false
       - id: deno-test
         entry: deno task --recursive test
+        pass_filenames: false
