@@ -23,11 +23,7 @@ repos:
         types: [batch]
       - id: trailing-whitespace
   - repo: https://github.com/glektarssza/pre-commit-hooks.git
-    rev: v0.7.0
+    rev: v0.9.1
     hooks:
-      - id: deno-lint
-        entry: deno task --recursive lint
-        pass_filenames: false
-      - id: deno-test
-        entry: deno task --recursive test
-        pass_filenames: false
+      - id: deno-task-recursive-lint
+      - id: deno-task-recursive-test
