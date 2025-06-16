@@ -83,11 +83,11 @@
         },
         "test": {
             "description": "Run the project unit tests.",
-            "command": "mocha ./tests/**/*.spec.ts"
+            "command": "mocha --config ./.mocharc.cjs"
         },
         "test:ci": {
             "description": "Run the project unit tests from inside a CI pipeline.",
-            "command": "mocha ./tests/**/*.spec.ts"
+            "command": "mocha --config ./.mocharc.cjs"
         }
     },
     "test": {

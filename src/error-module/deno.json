@@ -8,6 +8,7 @@
     "imports": {
         "@src": "./src/mod.ts",
         "@src/*": "./src/*",
+        "@types/deno": "npm:@types/deno@^2.3.0/index.d.ts",
         "@types/mocha": "npm:@types/mocha@^10.0.10/index.d.ts"
     },
     "bench": {
@@ -83,11 +84,11 @@
         },
         "test": {
             "description": "Run the project unit tests.",
-            "command": "mocha ./tests/**/*.spec.ts"
+            "command": "mocha --config ./.mocharc.cjs"
         },
         "test:ci": {
             "description": "Run the project unit tests from inside a CI pipeline.",
-            "command": "mocha ./tests/**/*.spec.ts"
+            "command": "mocha --config ./.mocharc.cjs"
         }
     },
     "test": {
