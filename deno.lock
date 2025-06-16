@@ -10,6 +10,7 @@
     "npm:@types/mocha@*": "10.0.10",
     "npm:@types/mocha@^10.0.10": "10.0.10",
     "npm:@types/node@^22.15.30": "22.15.30",
+    "npm:@types/sinon@^17.0.4": "17.0.4",
     "npm:chai@*": "5.2.0",
     "npm:chai@^5.2.0": "5.2.0",
     "npm:eslint-config-prettier@^10.1.5": "10.1.5_eslint@9.28.0",
@@ -21,6 +22,7 @@
     "npm:mocha@^11.5.0": "11.6.0",
     "npm:prettier@3.5.3": "3.5.3",
     "npm:prettier@^3.5.3": "3.5.3",
+    "npm:sinon@21": "21.0.0",
     "npm:typescript-eslint@^8.33.1": "8.33.1_eslint@9.28.0_typescript@5.8.3_@typescript-eslint+parser@8.33.1__eslint@9.28.0__typescript@5.8.3"
   },
   "npm": {
@@ -368,6 +370,26 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
+    "@sinonjs/commons@3.0.1": {
+      "integrity": "sha512-K3mCHKQ9sVh8o1C9cxkwxaOmXoAMlDxC1mYyHrjqOWEcBjYr76t96zL2zlj5dUGZ3HSw240X1qgH3Mjf1yJWpQ==",
+      "dependencies": [
+        "type-detect@4.0.8"
+      ]
+    },
+    "@sinonjs/fake-timers@13.0.5": {
+      "integrity": "sha512-36/hTbH2uaWuGVERyC6da9YwGWnzUZXuPro/F2LfsdOsLnCojz/iSH8MxUt/FD2S5XBSVPhmArFUXcpCQ2Hkiw==",
+      "dependencies": [
+        "@sinonjs/commons"
+      ]
+    },
+    "@sinonjs/samsam@8.0.2": {
+      "integrity": "sha512-v46t/fwnhejRSFTGqbpn9u+LQ9xJDse10gNnPgAcxgdoCDMXj/G2asWAC/8Qs+BAZDicX+MNZouXT1A7c83kVw==",
+      "dependencies": [
+        "@sinonjs/commons",
+        "lodash.get",
+        "type-detect@4.1.0"
+      ]
+    },
     "@types/chai@5.2.2": {
       "integrity": "sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==",
       "dependencies": [
@@ -394,6 +416,15 @@
       "dependencies": [
         "undici-types"
       ]
+    },
+    "@types/sinon@17.0.4": {
+      "integrity": "sha512-RHnIrhfPO3+tJT0s7cFaXGZvsL4bbR3/k7z3P312qMS4JaS2Tk+KiwiLx1S0rQ56ERj00u1/BtdyVd0FY+Pdew==",
+      "dependencies": [
+        "@types/sinonjs__fake-timers"
+      ]
+    },
+    "@types/sinonjs__fake-timers@8.1.5": {
+      "integrity": "sha512-mQkU2jY8jJEF7YHjHvsQO8+3ughTL1mcnn96igfhONmR+fUPSKIkefQYpSe8bsly2Ep7oQbn/6VG5/9/0qcArQ=="
     },
     "@typescript-eslint/eslint-plugin@8.33.1_@typescript-eslint+parser@8.33.1__eslint@9.28.0__typescript@5.8.3_eslint@9.28.0_typescript@5.8.3": {
       "integrity": "sha512-TDCXj+YxLgtvxvFlAvpoRv9MAncDLBV2oT9Bd7YBGC/b/sEURoOYuIwLI99rjWOfY3QtDzO+mk0n4AmdFExW8A==",
@@ -973,6 +1004,10 @@
         "p-locate"
       ]
     },
+    "lodash.get@4.4.2": {
+      "integrity": "sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==",
+      "deprecated": true
+    },
     "lodash.merge@4.6.2": {
       "integrity": "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="
     },
@@ -1177,6 +1212,16 @@
     "signal-exit@4.1.0": {
       "integrity": "sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw=="
     },
+    "sinon@21.0.0": {
+      "integrity": "sha512-TOgRcwFPbfGtpqvZw+hyqJDvqfapr1qUlOizROIk4bBLjlsjlB00Pg6wMFXNtJRpu+eCZuVOaLatG7M8105kAw==",
+      "dependencies": [
+        "@sinonjs/commons",
+        "@sinonjs/fake-timers",
+        "@sinonjs/samsam",
+        "diff",
+        "supports-color@7.2.0"
+      ]
+    },
     "string-width@4.2.3": {
       "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
       "dependencies": [
@@ -1240,6 +1285,12 @@
       "dependencies": [
         "prelude-ls"
       ]
+    },
+    "type-detect@4.0.8": {
+      "integrity": "sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g=="
+    },
+    "type-detect@4.1.0": {
+      "integrity": "sha512-Acylog8/luQ8L7il+geoSxhEkazvkslg7PSNKOX59mbB9cOveP5aq9h74Y7YU8yDpJwetzQQrfIwtf4Wp4LKcw=="
     },
     "typescript-eslint@8.33.1_eslint@9.28.0_typescript@5.8.3_@typescript-eslint+parser@8.33.1__eslint@9.28.0__typescript@5.8.3": {
       "integrity": "sha512-AgRnV4sKkWOiZ0Kjbnf5ytTJXMUZQ0qhSVdQtDNYLPLnjsATEYhaO94GlRQwi4t4gO8FfjM6NnikHeKjUm8D7A==",
@@ -1339,23 +1390,38 @@
       "npm:globals@^16.2.0",
       "npm:mocha@^11.5.0",
       "npm:prettier@^3.5.3",
+      "npm:sinon@21",
       "npm:typescript-eslint@^8.33.1"
     ],
     "members": {
       "src/app": {
         "dependencies": [
-          "npm:@types/mocha@^10.0.10"
+          "npm:@types/deno@^2.3.0",
+          "npm:@types/mocha@^10.0.10",
+          "npm:@types/sinon@^17.0.4",
+          "npm:chai@^5.2.0",
+          "npm:mocha@^11.5.0",
+          "npm:sinon@21"
         ]
       },
       "src/error-module": {
         "dependencies": [
           "npm:@types/deno@^2.3.0",
-          "npm:@types/mocha@^10.0.10"
+          "npm:@types/mocha@^10.0.10",
+          "npm:@types/sinon@^17.0.4",
+          "npm:chai@^5.2.0",
+          "npm:mocha@^11.5.0",
+          "npm:sinon@21"
         ]
       },
       "src/ffi-module": {
         "dependencies": [
-          "npm:@types/mocha@^10.0.10"
+          "npm:@types/deno@^2.3.0",
+          "npm:@types/mocha@^10.0.10",
+          "npm:@types/sinon@^17.0.4",
+          "npm:chai@^5.2.0",
+          "npm:mocha@^11.5.0",
+          "npm:sinon@21"
         ]
       }
     }

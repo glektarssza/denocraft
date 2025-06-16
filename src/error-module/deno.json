@@ -9,7 +9,11 @@
         "@src": "./src/mod.ts",
         "@src/*": "./src/*",
         "@types/deno": "npm:@types/deno@^2.3.0/index.d.ts",
-        "@types/mocha": "npm:@types/mocha@^10.0.10/index.d.ts"
+        "@types/mocha": "npm:@types/mocha@^10.0.10/index.d.ts",
+        "@types/sinon": "npm:@types/sinon@^17.0.4/index.d.ts",
+        "chai": "npm:chai@^5.2.0",
+        "mocha": "npm:mocha@^11.5.0",
+        "sinon": "npm:sinon@^21.0.0"
     },
     "bench": {
         "include": ["tests/**/*.bench.ts", "tests/*.bench.ts"]
