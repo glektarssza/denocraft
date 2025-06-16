@@ -46,11 +46,47 @@
     },
     "tasks": {
         "lint": {
+            "description": "Run linting tools against the project.",
+            "command": "deno task eslint && deno task prettier"
+        },
+        "lint:ci": {
+            "description": "Run linting tools against the project from inside a CI pipeline.",
+            "command": "deno task eslint:ci && deno task prettier:ci"
+        },
+        "lint:fix": {
+            "description": "Run linting tools against the project and fix any issues found.",
+            "command": "deno task eslint:fix && deno task prettier:fix"
+        },
+        "eslint": {
             "description": "Run ESLint against the project.",
+            "command": "eslint --cache ./src/ ./tests/"
+        },
+        "eslint:ci": {
+            "description": "Run ESLint against the project from inside a CI pipeline.",
             "command": "eslint ./src/ ./tests/"
+        },
+        "eslint:fix": {
+            "description": "Run ESLint against the project and fix any issues found.",
+            "command": "eslint --cache --fix ./src/ ./tests/"
+        },
+        "prettier": {
+            "description": "Run Prettier against the project.",
+            "command": "prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --ignore-path ../../.gitignore --check ."
+        },
+        "prettier:ci": {
+            "description": "Run Prettier against the project from inside a CI pipeline.",
+            "command": "prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --ignore-path ../../.gitignore --check ."
+        },
+        "prettier:fix": {
+            "description": "Run Prettier against the project and fix any issues found.",
+            "command": "prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --ignore-path ../../.gitignore --check --write ."
         },
         "test": {
             "description": "Run the project unit tests.",
+            "command": "mocha ./tests/**/*.spec.ts"
+        },
+        "test:ci": {
+            "description": "Run the project unit tests from inside a CI pipeline.",
             "command": "mocha ./tests/**/*.spec.ts"
         }
     },
