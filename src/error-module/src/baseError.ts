@@ -17,7 +17,6 @@ export class BaseError extends Error {
      */
     public override get cause(): Error | null {
         if (super.cause instanceof Error) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return super.cause;
         }
         return null;
