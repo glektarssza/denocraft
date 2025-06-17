@@ -1,6 +1,13 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "./deno.json",
     "compilerOptions": {
+        "lib": ["ES2022"],
+        "moduleResolution": "bundler",
+        "paths": {
+            "@src": ["./src/mod.ts"],
+            "@src/*": ["./src/*"]
+        },
+        "target": "es2022",
         "types": []
     },
     "exclude": ["node_modules"]

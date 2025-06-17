@@ -6,8 +6,8 @@
         ".": "./src/mod.ts"
     },
     "imports": {
+        "@faker-js/faker": "npm:@faker-js/faker@^9.8.0",
         "@src": "./src/mod.ts",
-        "@src/*": "./src/*",
         "@types/deno": "npm:@types/deno@^2.3.0/index.d.ts",
         "@types/mocha": "npm:@types/mocha@^10.0.10/index.d.ts",
         "@types/sinon": "npm:@types/sinon@^17.0.4/index.d.ts",

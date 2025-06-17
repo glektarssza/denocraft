@@ -1,8 +1,0 @@
-{
-    "extends": "./deno.json",
-    "compilerOptions": {
-        "target": "es2022",
-        "lib": ["ES2022"]
-    },
-    "exclude": ["node_modules"]
-}

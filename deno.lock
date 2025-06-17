@@ -1396,6 +1396,7 @@
     "members": {
       "src/app": {
         "dependencies": [
+          "npm:@faker-js/faker@^9.8.0",
           "npm:@types/deno@^2.3.0",
           "npm:@types/mocha@^10.0.10",
           "npm:@types/sinon@^17.0.4",
@@ -1406,6 +1407,7 @@
       },
       "src/error-module": {
         "dependencies": [
+          "npm:@faker-js/faker@^9.8.0",
           "npm:@types/deno@^2.3.0",
           "npm:@types/mocha@^10.0.10",
           "npm:@types/sinon@^17.0.4",
@@ -1416,6 +1418,7 @@
       },
       "src/ffi-module": {
         "dependencies": [
+          "npm:@faker-js/faker@^9.8.0",
           "npm:@types/deno@^2.3.0",
           "npm:@types/mocha@^10.0.10",
           "npm:@types/sinon@^17.0.4",
