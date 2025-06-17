@@ -1,11 +1,7 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "types": [],
-        "paths": {
-            "@src": ["../src/mod.ts"],
-            "@src/*": ["../src/*"]
-        }
+        "types": []
     },
     "exclude": []
 }
