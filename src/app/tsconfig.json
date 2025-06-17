@@ -4,8 +4,7 @@
         "lib": ["ES2022"],
         "moduleResolution": "bundler",
         "paths": {
-            "@src": ["./src/mod.ts"],
-            "@src/*": ["./src/*"]
+            "@src": ["./src/mod.ts"]
         },
         "target": "es2022",
         "types": []
