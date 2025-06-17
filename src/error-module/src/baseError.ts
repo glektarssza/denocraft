@@ -1,3 +1,5 @@
+/// <reference types="@types/deno" />
+
 /**
  * Extended options for creating a new {@link BaseError}.
  */
