@@ -23,7 +23,13 @@ export class BaseError extends Error {
         return null;
     }
 
+    /**
+     * Create a new instance.
+     *
+     * @param message - The custom message to use to create the new instance.
+     */
     public constructor(message?: string, opts?: BaseErrorOptions) {
         super(message, opts);
+        this.name = 'BaseError';
     }
 }
