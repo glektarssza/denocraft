@@ -1113,17 +1113,17 @@
       "npm:typescript-eslint@^8.33.1"
     ],
     "members": {
-      "src/app": {
+      "packages/app": {
         "dependencies": [
           "npm:@types/mocha@^10.0.10"
         ]
       },
-      "src/error-module": {
+      "packages/error-module": {
         "dependencies": [
           "npm:@types/mocha@^10.0.10"
         ]
       },
-      "src/ffi-module": {
+      "packages/ffi-module": {
         "dependencies": [
           "npm:@types/mocha@^10.0.10"
         ]

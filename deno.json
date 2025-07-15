@@ -1,7 +1,11 @@
 {
     "$schema": "https://github.com/denoland/deno/raw/refs/heads/main/cli/schemas/config-file.v1.json",
     "workspace": {
-        "members": ["./src/app/", "./src/error-module/", "./src/ffi-module/"]
+        "members": [
+            "./packages/app/",
+            "./packages/error-module/",
+            "./packages/ffi-module/"
+        ]
     },
     "lock": true,
     "vendor": true,
